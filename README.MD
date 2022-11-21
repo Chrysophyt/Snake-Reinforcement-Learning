@@ -1,12 +1,12 @@
 # Modified Snake Game
 This repository is an extension based on an existing reinforcement learning [snake repo](https://github.com/maurock/snake-ga).
-With the Deep Q-Learning Network the snakes were able to direct themselves to food placed on the grid.
+With the Deep Q-Learning Network the snakes were able to direct themselves to the food that is placed on the grid.
 
-However, we are interested on a new different task. If the snake able to walk 2 steps (removing the food in the game), the snake length will extend and increase the game score.
+However, in this particular repository, we are interested on a new different game rule. If the snake was able to walk 2 steps (removing the food in the game), the snake length will extend and increase the game score.
 
 To implement this algorithm, we simply swap a snake has eaten boolean condition not based on their coordinates equal to food coordinates `x_player==x_food && y_player=y_food`, but rather iterating internal state which reset every time the snake extend itself `player_internal_state==n`, n is the targeted steps before the snake extends itselves and the internal state reset.
 
-For the DQN, input difference, we drop 11 sensory input to 7, due to 8-11 is about direction of food which now are irrelevant. From our early testing, we found the default reward of +10 and -10 if crash not suitable due to +10 reward for doing anything in early game is too big of a reward and overpowering. We change the reward to +1, +0.1 and we found the +1 reward perform best and most stable as seen of table below. Lastly we also increase discount factor from 0.9 to 0.99.
+For the DQN, our inputs are also difference, we drop the 11 sensory input to 7, due to 8-11 is about direction of the food which now are irrelevant. From our early testing, we found the default reward of +10 and -10 if crash not suitable due to +10 reward for doing anything in early game is too big of a reward and overpowering. We change the reward to +1, +0.1 and we found the +1 reward perform best and most stable as seen of table below. Lastly we also increase discount factor from 0.9 to 0.99.
 
 ### Training Data
 | Reward | Total Score | Average   | Std     |
@@ -25,23 +25,23 @@ For the DQN, input difference, we drop 11 sensory input to 7, due to 8-11 is abo
 ### Results
 ![Alt Text](1.1.gif)
 
-Above is the results of the snake on different tasks (Ubuntu screen recorder have a bug, pardon the camera). We found interestingly the snake have found strategy to not crash, but due to limited input, the snake often stuck on loop inside, trapping itself, ending the game early.
+Above is the results of the snake on different tasks (My linux screen recorder quite buggy. Pardon the camera). We found interestingly the snake have found strategy to not crash, but due to limited input, the snake often stuck on loop inside, trapping itself, ending the game early.
 
 # OpenAI Gym Environment
 
-For the snake program itself, we are interested to integrate the program around [OpenAI Gym](https://www.gymlibrary.dev/), a commonly used environment in reinforcement learning development and research.
+For the snake program itself, we are interested to integrate the program around [OpenAI Gym](https://www.gymlibrary.dev/), a commonly used environment in reinforcement learning development and research community.
 
-First do not forget to move inside the directory before running any scripts inside the directory. 
+First, move inside the directory before running any scripts. 
 ```
 cd snake-gym-1.3
-pip install gym # You need to have installed the requirements.txt from 1.1
+pip install gym # You need to have installed the requirements.txt from 1.1 folder
 ```
-Then to test the environment game you can run
+Then to test the environment game and move with console input, you can run
 ```
 python testenv.py
 ```
 
-Now the snake environment can flexibly run. For example
+Now the snake environment can be flexible run. The usage example:
 ```
 env = snake_game.SnakeGameEnv(render_mode='human') # will open a window
 env = snake_game.SnakeGameEnv(render_mode='rgb_array') # will not open a window, rather return the screen in rgb_array form
